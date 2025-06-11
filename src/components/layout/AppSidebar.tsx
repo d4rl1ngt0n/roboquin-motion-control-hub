@@ -35,18 +35,19 @@ const navigationItems = [
 ];
 
 export function AppSidebar() {
-  const { collapsed } = useSidebar();
+  const { state } = useSidebar();
   const location = useLocation();
 
   const isActive = (path: string) => location.pathname === path;
+  const isCollapsed = state === "collapsed";
 
   return (
-    <Sidebar className={collapsed ? 'w-14' : 'w-64'} collapsible>
+    <Sidebar className={isCollapsed ? 'w-14' : 'w-64'} collapsible="icon">
       <SidebarTrigger className="m-2 self-end" />
       
       <SidebarContent className="bg-slate-900">
         <div className="p-4">
-          <h2 className={`font-bold text-white ${collapsed ? 'hidden' : 'text-lg'}`}>
+          <h2 className={`font-bold text-white ${isCollapsed ? 'hidden' : 'text-lg'}`}>
             RoboQuin Hub
           </h2>
         </div>
@@ -69,7 +70,7 @@ export function AppSidebar() {
                       }
                     >
                       <item.icon className="h-5 w-5" />
-                      {!collapsed && <span className="text-sm">{item.title}</span>}
+                      {!isCollapsed && <span className="text-sm">{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
