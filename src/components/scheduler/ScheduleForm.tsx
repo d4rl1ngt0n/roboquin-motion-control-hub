@@ -1,113 +1,141 @@
-
-import React, { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useState } from 'react';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import { Label } from '../ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { createSchedule, updateSchedule } from '../../api/schedules';
+import { toast } from 'sonner';
 
 interface ScheduleFormProps {
-  onClose: () => void;
+  mannequins: Array<{ id: string; name: string }>;
+  presets: Array<{ id: string; name: string }>;
+  onSuccess?: () => void;
+  initialData?: {
+    id: number;
+    device: string;
+    preset: string;
+    time: string;
+    date: string;
+    recurring: string;
+  };
 }
 
-export function ScheduleForm({ onClose }: ScheduleFormProps) {
+export function ScheduleForm({ mannequins, presets, onSuccess, initialData }: ScheduleFormProps) {
   const [formData, setFormData] = useState({
-    device: '',
-    preset: '',
-    date: '',
-    time: '',
-    recurring: 'once',
+    device: initialData?.device || '',
+    preset: initialData?.preset || '',
+    time: initialData?.time || '',
+    date: initialData?.date || '',
+    recurring: initialData?.recurring || 'Once'
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Creating schedule:', formData);
-    onClose();
+    setIsSubmitting(true);
+
+    try {
+      if (initialData) {
+        await updateSchedule(initialData.id, formData);
+        toast.success('Schedule updated successfully');
+      } else {
+        await createSchedule(formData);
+        toast.success('Schedule created successfully');
+      }
+      onSuccess?.();
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Failed to save schedule');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Schedule Motion</DialogTitle>
-        </DialogHeader>
-        
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <Label htmlFor="device">Select Device</Label>
-            <Select onValueChange={(value) => setFormData(prev => ({ ...prev, device: value }))}>
-              <SelectTrigger>
-                <SelectValue placeholder="Choose mannequin" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="MQ-001">MQ-001 - Store A Window</SelectItem>
-                <SelectItem value="MQ-002">MQ-002 - Store B Main Floor</SelectItem>
-                <SelectItem value="MQ-004">MQ-004 - Store D VIP</SelectItem>
-                <SelectItem value="MQ-006">MQ-006 - Store F Fitting</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          
-          <div>
-            <Label htmlFor="preset">Motion Preset</Label>
-            <Select onValueChange={(value) => setFormData(prev => ({ ...prev, preset: value }))}>
-              <SelectTrigger>
-                <SelectValue placeholder="Choose motion" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="welcome">Welcome Gesture</SelectItem>
-                <SelectItem value="fashion-a">Fashion Pose A</SelectItem>
-                <SelectItem value="showcase">Product Showcase</SelectItem>
-                <SelectItem value="attention">Attention Getter</SelectItem>
-                <SelectItem value="idle">Idle Breathing</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          
-          <div>
-            <Label htmlFor="date">Date</Label>
-            <Input
-              id="date"
-              type="date"
-              value={formData.date}
-              onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
-              required
-            />
-          </div>
-          
-          <div>
-            <Label htmlFor="time">Time</Label>
-            <Input
-              id="time"
-              type="time"
-              value={formData.time}
-              onChange={(e) => setFormData(prev => ({ ...prev, time: e.target.value }))}
-              required
-            />
-          </div>
-          
-          <div>
-            <Label htmlFor="recurring">Recurrence</Label>
-            <Select onValueChange={(value) => setFormData(prev => ({ ...prev, recurring: value }))}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select frequency" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="once">Once</SelectItem>
-                <SelectItem value="daily">Daily</SelectItem>
-                <SelectItem value="weekdays">Weekdays</SelectItem>
-                <SelectItem value="weekly">Weekly</SelectItem>
-                <SelectItem value="monthly">Monthly</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          
-          <div className="flex gap-3 pt-4">
-            <Button type="submit" className="flex-1">Create Schedule</Button>
-            <Button type="button" variant="outline" onClick={onClose}>Cancel</Button>
-          </div>
-        </form>
-      </DialogContent>
-    </Dialog>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="space-y-2">
+        <Label htmlFor="device">Device</Label>
+        <Select
+          value={formData.device}
+          onValueChange={(value) => setFormData({ ...formData, device: value })}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Select a device" />
+          </SelectTrigger>
+          <SelectContent>
+            {mannequins.map((mannequin) => (
+              <SelectItem key={mannequin.id} value={mannequin.id}>
+                {mannequin.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="preset">Motion Preset</Label>
+        <Select
+          value={formData.preset}
+          onValueChange={(value) => setFormData({ ...formData, preset: value })}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Select a preset" />
+          </SelectTrigger>
+          <SelectContent>
+            {presets.map((preset) => (
+              <SelectItem key={preset.id} value={preset.id}>
+                {preset.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="date">Date</Label>
+        <Input
+          id="date"
+          type="date"
+          value={formData.date}
+          onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+          required
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="time">Time</Label>
+        <Input
+          id="time"
+          type="time"
+          value={formData.time}
+          onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+          required
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="recurring">Recurring</Label>
+        <Select
+          value={formData.recurring}
+          onValueChange={(value) => setFormData({ ...formData, recurring: value })}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Select frequency" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="Once">Once</SelectItem>
+            <SelectItem value="Daily">Daily</SelectItem>
+            <SelectItem value="Weekdays">Weekdays</SelectItem>
+            <SelectItem value="Weekly">Weekly</SelectItem>
+            <SelectItem value="Monthly">Monthly</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <Button type="submit" className="w-full" disabled={isSubmitting}>
+        {isSubmitting ? 'Saving...' : initialData ? 'Update Schedule' : 'Create Schedule'}
+      </Button>
+    </form>
   );
 }
+

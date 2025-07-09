@@ -1,0 +1,433 @@
+[
+{
+  "component_id": "servo_HS805BB_chest",
+  "quantity": 2,
+  "action_segment": "Chest articulation and torso movement",
+  "error_codes": [
+    {
+      "code": "ERR_CHEST_ROTATION_LIMIT",
+        "description": "Chest rotation exceeds 45° (inhuman movement)"
+    }
+  ],
+  "description": "Hitec HS-805BB servo for chest and torso articulation.",
+  "maintenance": "Lubricate gears every 250,000 cycles and inspect for alignment monthly.",
+  "servo_description": "The HS-805BB is an analog PWM servo featuring a brushed motor and potentiometer feedback, optimized for smooth motion in medium-load applications such as robotic chest and torso assemblies.",
+  "technical_specs": {
+    "servo_width_mm": 30.0,
+    "motor_type": "Brushed motor",
+    "position_sensor": "Potentiometer",
+    "waterproof_rating_IP54": true,
+    "ingress_protection_class": "IP4X",
+    "communication": "PWM",
+    "servo_type": "Analogservo",
+    "max_operating_voltage_V": 6.0,
+    "max_stall_torque_kgf_cm": 24.7,
+    "max_speed_s_per_60deg": 0.14,
+    "hitec_serie": "HS-Serie",
+    "weight_g": 152.0,
+      "spline_gear_teeth": "15T (×8.0mm)"
+  }
+  },
+{
+  "component_id": "servo_HS805BB_arms",
+  "quantity": 8,
+  "action_segment": "Shoulder and bicep movements for arm waving",
+  "error_codes": [
+    {
+      "code": "ERR_ARM_YAW_LIMIT",
+        "description": "Arm raises above 180° (inhuman movement)"
+    }
+  ],
+  "description": "Hitec HS-805BB servos for shoulder and upper arm articulation.",
+  "maintenance": "Lubricate gears every 250,000 cycles and test torque monthly; inspect alignment quarterly.",
+  "servo_description": "The HS-805BB is an analog PWM servo featuring a brushed motor and potentiometer feedback, optimized for smooth, durable motion in medium-load applications such as shoulder and bicep movements.",
+  "technical_specs": {
+    "servo_width_mm": 30.0,
+    "motor_type": "Brushed motor",
+    "position_sensor": "Potentiometer",
+    "waterproof_rating_IP54": true,
+    "ingress_protection_class": "IP4X",
+    "communication": "PWM",
+    "servo_type": "Analogservo",
+    "max_operating_voltage_V": 6.0,
+    "max_stall_torque_kgf_cm": 24.7,
+    "max_speed_s_per_60deg": 0.14,
+    "hitec_serie": "HS-Serie",
+    "weight_g": 152.0,
+      "spline_gear_teeth": "15T (×8.0mm)"
+  }
+  },
+{
+  "component_id": "servo_CYS_S8218",
+  "quantity": 2,
+  "action_segment": "Additional torso articulation",
+  "error_codes": [
+    {
+      "code": "ERR_TORSO_ROTATION_LIMIT",
+        "description": "Torso twist exceeds 60° (inhuman movement)"
+    }
+  ],
+  "description": "CYS S8218 digital servo for precise torso twisting and articulation.",
+  "maintenance": "Lubricate gears every 250,000 cycles; inspect gear mesh quarterly; check for alignment and binding monthly.",
+  "servo_description": "The CYS-S8218 is a high-torque digital servo featuring an NdFeB motor and dual ball bearings, optimized for robust torso movements in humanoid robotics.",
+  "technical_specs": {
+    "model": "CYS-S8218",
+    "weight_g": 164,
+      "dimensions_mm": "59.5×29.2×55.2",
+      "control_system": "Pulse Width Control 1000–2000 μs, 1500 μs neutral",
+      "operating_voltage_V": "6.0–7.4",
+    "operating_temperature_C": "-10 to +50",
+    "operating_speed_s_per_60deg_6V": 0.2,
+    "operating_speed_s_per_60deg_7_4V": 0.18,
+    "stall_torque_kgf_cm_6V": 38.0,
+    "operating_angle_deg": 45,
+    "pulse_travel_us": 500,
+    "modifiable_360": false,
+    "direction": "Anticlockwise",
+    "current_drain_idle_mA_6V": 20,
+    "current_drain_no_load_mA_6V": 180,
+    "current_drain_idle_mA_7_4V": 20,
+    "current_drain_no_load_mA_7_4V": 200,
+    "stall_current_A_6V": 7.5,
+    "stall_current_A_7_4V": 8.6,
+    "deadband_width_us": 4,
+    "motor_type": "NdFeB motor",
+    "bearing_type": "Dual ball bearing",
+    "horn_gear_spline": "17T",
+    "gear_material": "Metal",
+    "connector_wire_length_mm": 300,
+    "wire_info": {
+      "brown_black": "Negative",
+      "red": "Positive",
+      "orange_white": "Signal"
+    }
+  }
+  },
+{
+  "component_id": "servo_HK15298B",
+  "quantity": 1,
+  "action_segment": "Jaw open/close mechanism",
+  "error_codes": [
+    {
+      "code": "ERR_JAW_OVEREXTEND",
+        "description": "Jaw opening angle exceeds 45° (inhuman movement)"
+    }
+  ],
+  "description": "HK15298B servo used to actuate jaw movements.",
+  "maintenance": "Perform lubrication and check for backlash every 200,000 cycles.",
+  "servo_description": "The HK15298B is an analog servo for precise jaw articulation in humanoid robotics.",
+  "technical_specs": {
+    "servo_width_mm": 30.0,
+    "motor_type": "Brushed motor",
+    "position_sensor": "Potentiometer",
+    "waterproof_rating_IP54": true,
+    "ingress_protection_class": "IP4X",
+    "communication": "PWM",
+    "servo_type": "Analogservo",
+    "max_operating_voltage_V": 6.0,
+    "max_stall_torque_kgf_cm": 24.7,
+    "max_speed_s_per_60deg": 0.14,
+    "hitec_serie": "HS-Serie",
+    "weight_g": 152.0,
+      "spline_gear_teeth": "15T (×8.0mm)"
+  }
+  },
+{
+  "component_id": "servo_DS929HV",
+  "quantity": 3,
+  "action_segment": "Eye scanning and blink motions",
+  "error_codes": [
+    {
+      "code": "ERR_EYE_ROTATION_LIMIT",
+        "description": "Eye rotation exceeds 30° (inhuman movement)"
+    }
+  ],
+  "description": "Corona DS929HV MG digital servo used for precise eye movement mechanisms.",
+  "maintenance": "Inspect metal gears and bearings monthly; lubricate lightly every 200,000 cycles.",
+  "servo_description": "The DS929HV is a micro digital servo featuring metal gears, dual ball bearings, and potentiometer feedback for high-speed, precise micro-movements.",
+  "technical_specs": {
+    "model": "DS929HV",
+    "operating_voltage_V": "6.0/7.4",
+    "operating_current_mA": "200/240",
+    "operating_speed_s_per_60deg": "0.10/0.09",
+    "stall_torque_kgf_cm": "2.2/2.4",
+      "dimensions_mm": "22.5×11.5×24.6",
+    "weight_g": 12.5,
+    "deadband_width_us": 3,
+    "travel_deg": 40,
+    "pulse_travel_us": 400,
+    "position_sensor": "Dual-potentiometer Direct Drive",
+    "bearing_type": "MR85 Ball Bearing",
+    "gear_material": "Metal",
+    "wire_length_mm": 215,
+    "temperature_range_C": "-20 to +60",
+    "communication": "Digital"
+  }
+  },
+{
+  "component_id": "servo_MG996R_fingers",
+  "quantity": 10,
+  "action_segment": "Finger flex and extension",
+  "error_codes": [
+    {
+      "code": "ERR_FINGER_CLOSURE_FORCE",
+      "description": "Excessive force detected (potential pinch hazard)"
+    }
+  ],
+  "description": "MG996R servos for individual finger movements.",
+  "maintenance": "Inspect gears monthly and lubricate every 150,000 cycles; test range of motion quarterly.",
+  "servo_description": "The MG996R is a high-torque analog servo with reinforced gears and dual ball bearings.",
+  "technical_specs": {
+    "weight_g": 55,
+      "dimensions_mm": "40.7×19.7×42.9",
+    "stall_torque_kgf_cm_4_8V": 9.4,
+    "stall_torque_kgf_cm_6V": 11.0,
+    "operating_speed_s_per_60deg_4_8V": 0.17,
+    "operating_speed_s_per_60deg_6V": 0.14,
+      "operating_voltage_V": "4.8–7.2",
+      "running_current_mA_6V": "500–900",
+    "stall_current_A_6V": 2.5,
+    "deadband_width_us": 5,
+    "bearIng_design": "Double ball bearing",
+      "temperature_range_C": "0–55"
+  }
+  },
+{
+  "component_id": "servo_MG996R_wrist",
+  "quantity": 2,
+  "action_segment": "Wrist rotation mechanism",
+  "error_codes": [
+    {
+      "code": "ERR_WRIST_OVERROTATE",
+        "description": "Wrist rotation exceeds 180° yaw (inhuman movement)"
+    }
+  ],
+  "description": "MG996R servos for wrist rotational control.",
+  "maintenance": "Inspect gears and rotate through full range monthly; lubricate every 150,000 cycles.",
+  "servo_description": "The MG996R is a robust analog servo with metal gears and dual ball bearings.",
+  "technical_specs": {
+    "weight_g": 55,
+      "dimensions_mm": "40.7×19.7×42.9",
+    "stall_torque_kgf_cm_4_8V": 9.4,
+    "stall_torque_kgf_cm_6V": 11.0,
+    "operating_speed_s_per_60deg_4_8V": 0.17,
+    "operating_speed_s_per_60deg_6V": 0.14,
+      "operating_voltage_V": "4.8–7.2",
+      "running_current_mA_6V": "500–900",
+    "stall_current_A_6V": 2.5,
+    "deadband_width_us": 5,
+    "bearing_design": "Double ball bearing",
+      "temperature_range_C": "0–55"
+  }
+  },
+{
+  "component_id": "sensor_PIR_AM312",
+  "quantity": 1,
+  "action_segment": "Customer motion detection",
+  "error_codes": [],
+  "description": "AM312 PIR motion sensor for detecting human presence.",
+  "maintenance": "Test sensitivity monthly and clean enclosure.",
+  "sensor_description": "Passive infrared motion sensor module with low power consumption.",
+  "technical_specs": {
+      "operating_voltage_V": "2.7–12",
+    "static_power_consumption_mA": "<0.1",
+    "delay_time_s": 2,
+    "block_time_s": 2,
+    "trigger_mode": "repeatable",
+      "sensing_range": "100° cone, 3–5 m",
+      "working_temperature_C": "-20–+60",
+      "dimensions_mm": "10×8"
+  }
+  },
+{
+  "component_id": "power_supply_S-120-6",
+  "quantity": 1,
+  "action_segment": "Power management for electronics",
+  "error_codes": [
+    {
+      "code": "ERR_POWER_OVERCURRENT",
+      "description": "Output current exceeds rated value"
+    },
+    {
+      "code": "ERR_POWER_OVERVOLTAGE",
+      "description": "Output voltage outside 6V"
+    }
+  ],
+  "description": "Switching power supply model S-120-6, 6V DC at 20A.",
+  "maintenance": "Check ventilation monthly; dust removal; load test bi-annually.",
+  "power_management_description": "AC110/220V input to 6V DC output SMPS with protections.",
+  "technical_specs": {
+      "input_voltage": "AC110/220V ±15%",
+    "input_frequency_Hz": "50/60",
+    "output_voltage_V": 6,
+    "output_current_A": 20,
+    "power_W": 120,
+    "protectionS": [
+      "short-circuit",
+      "overload"
+    ],
+      "dimensions_mm": "199×98×42",
+    "full_load_test": "100% burn-in",
+    "cooling": "natural"
+  }
+  },
+{
+  "component_id": "power_supply_S-180-6",
+  "quantity": 1,
+  "action_segment": "Power management for electronics",
+  "error_codes": [
+    {
+      "code": "ERR_POWER_OVERCURRENT",
+      "description": "Output current exceeds rated value"
+    },
+    {
+      "code": "ERR_POWER_OVERVOLTAGE",
+      "description": "Output voltage outside 6V"
+    }
+  ],
+  "description": "Switching power supply model S-180-6, 6V DC at 30A.",
+  "maintenance": "Check ventilation monthly; dust removal; load test bi-annually.",
+  "power_management_description": "AC110/220V input to 6V DC output SMPS with protections.",
+  "technical_specs": {
+      "input_voltage": "AC110/220V ±15%",
+    "input_frequency_Hz": "50/60",
+    "output_voltage_V": 6,
+    "output_current_A": 30,
+    "power_W": 180,
+    "protections": [
+      "short-circuit",
+      "overload"
+    ],
+      "dimensions_mm": "199×98×42",
+    "full_load_test": "100% burn-in",
+    "cooling": "natural"
+  }
+  },
+{
+  "component_id": "filament_PLA_torso",
+  "quantity": 5500,
+  "action_segment": "3D printed torso components",
+  "description": "Natural PLA filament for torso prints (grams).",
+  "maintenance": "Store dry; use within 12 months.",
+  "material": "PLA"
+  },
+{
+  "component_id": "filament_PLA_arms",
+  "quantity": 1500,
+  "action_segment": "3D printed arm components",
+  "description": "Natural PLA filament for arm prints (grams).",
+  "maintenance": "Store dry; use within 12 months.",
+  "material": "PLA"
+  },
+{
+  "component_id": "filament_PLA_hands",
+  "quantity": 1500,
+  "action_segment": "3D printed hand components",
+  "description": "Natural PLA filament for hand prints (grams).",
+  "maintenance": "Store dry; use within 12 months.",
+  "material": "PLA"
+  },
+{
+  "component_id": "spring_extension_5mm",
+  "quantity": 10,
+  "action_segment": "Finger return spring mechanism",
+  "description": "Extension springs for finger return.",
+  "maintenance": "Replace after 100,000 cycles.",
+  "technical_specs": {
+    "wire_diameter_mm": 0.5,
+    "outer_diameter_mm": 5,
+    "length_mm_range": "15-60",
+    "material": "spring steel"
+  }
+  },
+{
+  "component_id": "braided_line_Dyneema",
+  "quantity_m": 100,
+  "action_segment": "Tendon mechanism",
+  "description": "0.8mm braided Dyneema fishing line for tendon actuation.",
+  "material": "Dyneema",
+  "breaking_strength_lb": 200,
+    "product_info": "Geflochten, AbriebFest, Strukturiert, 150m or 1000m spools"
+  },
+{
+  "component_id": "sensor_AH3503",
+  "quantity": 1,
+  "action_segment": "Hand position sensing",
+  "description": "ALLECIN AH3503 Hall effect sensor module.",
+  "technical_specs": {
+    "manufacturer": "ALLECIN",
+    "part_number": "AEC-AH3503",
+    "weight_g": 18,
+      "package_dimensions_cm": "5.69×3.91×1.7",
+    "model_number": "AEC-3503",
+    "style": "AH3503",
+    "included_components": "Hall Effect Sensor",
+    "batteries_included": false
+  }
+  },
+{
+  "component_id": "module_HC05",
+  "quantity": 2,
+  "action_segment": "Wireless serial communication",
+  "description": "HC-05 Bluetooth module with onboard breakout.",
+  "maintenance": "Verify baud rate and pairing configurations.",
+  "technical_specs": {
+    "working_voltage_V": 3.3,
+    "default_baud": "9600",
+      "dimensions_mm": "28×15×2.35",
+    "working_current_mA": "8 (idle), 30 (TX)",
+    "application": "Serial over Bluetooth"
+  }
+  },
+{
+  "component_id": "cable_ribbon_16p_3m",
+  "quantity": 1,
+  "action_segment": "Hand sensor connections",
+  "description": "16-conductor flat ribbon cable for IDC connectors.",
+  "technical_specs": {
+    "length_m": 3,
+    "wire_gauge": "28 AWG",
+    "voltage_rating_V": 300,
+    "insulation": "PVC",
+    "pitch_mm": 1.27,
+    "conductors": 16
+  }
+  },
+{
+  "component_id": "controller_ArduinoMega2560",
+  "quantity": 2,
+  "action_segment": "Main control board",
+  "description": "Arduino Mega 2560 microcontroller board.",
+  "maintenance": "Check USB connector integrity; firmware updates.",
+  "technical_specs": {
+    "microcontroller": "ATmega2560",
+    "operating_voltage_V": 5,
+    "digital_IO": 54,
+    "analog_inputs": 16
+  }
+  },
+{
+  "component_id": "shield_NervoBoard",
+  "quantity": 2,
+  "action_segment": "Servo management",
+  "description": "InMoov NervoBoard Arduino shield for servo breakout.",
+  "maintenance": "Inspect header solder joints; verify breakout board integrity.",
+  "technical_specs": {
+    "breakout_boards": 11,
+    "compatible_boards": [
+      "Uno",
+      "Mega",
+      "Duemilanove"
+    ],
+    "components": [
+      "SpacerConnectV1",
+      "ShoulderConnectV1",
+      "ConnectorV1 x3",
+      "IDC Headers",
+      "Battery Connectors",
+      "Ribbon Cable"
+    ]
+  }
+}
+]
+

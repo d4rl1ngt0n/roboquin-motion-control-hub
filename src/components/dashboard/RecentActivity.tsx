@@ -1,8 +1,11 @@
-
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 
-export function RecentActivity() {
+interface RecentActivityProps {
+  mannequins?: any[];
+}
+
+export function RecentActivity({ mannequins }: RecentActivityProps) {
   const activities = [
     {
       id: 1,

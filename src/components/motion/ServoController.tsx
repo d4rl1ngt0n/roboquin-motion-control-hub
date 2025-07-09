@@ -1,8 +1,8 @@
-
 import React, { useState } from 'react';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
 import { RotateCcw } from 'lucide-react';
+import { toast } from 'sonner';
 
 export function ServoController() {
   const [servoPositions, setServoPositions] = useState({
@@ -13,6 +13,8 @@ export function ServoController() {
     head: [90],
     waist: [90],
   });
+
+  const [isApplying, setIsApplying] = useState(false);
 
   const handleServoChange = (servo: string, value: number[]) => {
     setServoPositions(prev => ({
@@ -30,6 +32,20 @@ export function ServoController() {
       head: [90],
       waist: [90],
     });
+    toast.success('Servo positions reset to default');
+  };
+
+  const applyPosition = async () => {
+    setIsApplying(true);
+    try {
+      // Simulate API call to apply servo positions
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      toast.success('Servo positions applied successfully');
+    } catch (error) {
+      toast.error('Failed to apply servo positions');
+    } finally {
+      setIsApplying(false);
+    }
   };
 
   const servoLabels = {
@@ -73,7 +89,13 @@ export function ServoController() {
       </div>
 
       <div className="pt-4 border-t">
-        <Button className="w-full">Apply Position</Button>
+        <Button 
+          className="w-full" 
+          onClick={applyPosition}
+          disabled={isApplying}
+        >
+          {isApplying ? 'Applying...' : 'Apply Position'}
+        </Button>
       </div>
     </div>
   );

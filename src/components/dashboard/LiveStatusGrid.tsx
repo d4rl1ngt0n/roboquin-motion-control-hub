@@ -1,10 +1,24 @@
-
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
-export function LiveStatusGrid() {
-  const mannequins = [
+export interface LiveStatusMannequin {
+  id: string;
+  name: string;
+  status: string;
+  battery?: number;
+  lastSeen?: string;
+  store?: string;
+  clientId?: string;
+}
+
+interface LiveStatusGridProps {
+  mannequins?: LiveStatusMannequin[];
+  onViewDetails?: (mannequin: LiveStatusMannequin) => void;
+}
+
+export function LiveStatusGrid({ mannequins: mannequinsProp, onViewDetails }: LiveStatusGridProps) {
+  const defaultMannequins = [
     { id: 'MQ-001', name: 'Store A - Window Display', status: 'online', battery: 87, lastSeen: '2 min ago' },
     { id: 'MQ-002', name: 'Store B - Main Floor', status: 'online', battery: 92, lastSeen: '1 min ago' },
     { id: 'MQ-003', name: 'Store C - Entrance', status: 'offline', battery: 23, lastSeen: '2 hours ago' },
@@ -12,6 +26,7 @@ export function LiveStatusGrid() {
     { id: 'MQ-005', name: 'Store E - Seasonal Display', status: 'maintenance', battery: 45, lastSeen: '15 min ago' },
     { id: 'MQ-006', name: 'Store F - Fitting Area', status: 'online', battery: 89, lastSeen: '45 sec ago' },
   ];
+  const mannequins = mannequinsProp && mannequinsProp.length > 0 ? mannequinsProp : defaultMannequins;
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -49,18 +64,18 @@ export function LiveStatusGrid() {
             
             <div className="flex justify-between text-xs">
               <span>Battery:</span>
-              <span className={getBatteryColor(mannequin.battery)}>
-                {mannequin.battery}%
+              <span className={getBatteryColor(mannequin.battery ?? 0)}>
+                {mannequin.battery ?? '--'}%
               </span>
             </div>
             
             <div className="flex justify-between text-xs">
               <span>Last Seen:</span>
-              <span className="text-gray-500">{mannequin.lastSeen}</span>
+              <span className="text-gray-500">{mannequin.lastSeen ?? '--'}</span>
             </div>
           </div>
           
-          <Button variant="outline" size="sm" className="w-full mt-3">
+          <Button variant="outline" size="sm" className="w-full mt-3" onClick={() => onViewDetails?.(mannequin)}>
             View Details
           </Button>
         </div>

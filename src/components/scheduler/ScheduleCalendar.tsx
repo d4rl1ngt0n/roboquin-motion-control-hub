@@ -1,7 +1,19 @@
-
 import React from 'react';
 
-export function ScheduleCalendar() {
+interface Schedule {
+  id: number;
+  device: string;
+  preset: string;
+  time: string;
+  date: string;
+  recurring: string;
+}
+
+interface ScheduleCalendarProps {
+  schedules: Schedule[];
+}
+
+export function ScheduleCalendar({ schedules }: ScheduleCalendarProps) {
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth();
@@ -10,7 +22,14 @@ export function ScheduleCalendar() {
   const firstDay = new Date(currentYear, currentMonth, 1).getDay();
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
   
-  const scheduledDays = [3, 7, 12, 15, 18, 22, 25, 28]; // Mock scheduled days
+  // Convert schedule dates to day numbers
+  const scheduledDays = schedules.map(schedule => {
+    const scheduleDate = new Date(schedule.date);
+    if (scheduleDate.getMonth() === currentMonth && scheduleDate.getFullYear() === currentYear) {
+      return scheduleDate.getDate();
+    }
+    return 0;
+  }).filter(day => day > 0);
 
   const renderCalendarDays = () => {
     const days = [];

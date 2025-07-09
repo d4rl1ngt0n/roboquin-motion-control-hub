@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAI API Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        .success { border-color: #4caf50; background-color: #f1f8e9; }
+        .error { border-color: #f44336; background-color: #ffebee; }
+        .info { border-color: #2196f3; background-color: #e3f2fd; }
+        button {
+            background: #2196f3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #1976d2; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .status.success { background: #d4edda; color: #155724; }
+        .status.error { background: #f8d7da; color: #721c24; }
+        .status.info { background: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 OpenAI API Test</h1>
+        
+        <div class="test-section info">
+            <h3>📋 Test Setup</h3>
+            <p>This test will verify the OpenAI API integration functionality.</p>
+            <input type="text" id="apiKey" placeholder="Enter your OpenAI API key (optional for structure test)" />
+            <button onclick="runStructureTest()">🧪 Test API Structure</button>
+            <button onclick="runAPITest()">🌐 Test API Call</button>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Test Results</h3>
+            <div id="results"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📝 Test Log</h3>
+            <div id="log" class="log"></div>
+        </div>
+    </div>
+
+    <script>
+        // Mock OpenAI API for testing
+        class MockOpenAIAPI {
+            constructor(apiKey) {
+                this.apiKey = apiKey;
+                this.baseURL = 'https://api.openai.com/v1/chat/completions';
+                this.model = 'gpt-3.5-turbo';
+            }
+
+            async generateResponse(messages, options = {}) {
+                try {
+                    log('🔍 Testing OpenAI API...');
+                    log('📝 Messages: ' + JSON.stringify(messages, null, 2));
+                    
+                    const response = await fetch(this.baseURL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${this.apiKey}`,
+                        },
+                        body: JSON.stringify({
+                            model: this.model,
+                            messages,
+                            temperature: options.temperature || 0.7,
+                            max_tokens: options.max_tokens || 500,
+                            top_p: options.top_p || 1,
+                            stream: false,
+                        }),
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(`OpenAI API Error: ${errorData.error?.message || 'Unknown error'}`);
+                    }
+
+                    const data = await response.json();
+                    log('✅ API Response received successfully');
+                    return data.choices[0].message.content;
+                } catch (error) {
+                    log('❌ OpenAI API Error: ' + error.message);
+                    throw error;
+                }
+            }
+
+            createSystemPrompt() {
+                return `You are RoboQuin, an intelligent fashion assistant for a retail store. You are designed to handle ALL types of questions and provide comprehensive, helpful responses.
+
+**Your Core Identity:**
+- You are a knowledgeable, friendly, and enthusiastic fashion expert
+- You work in a retail environment and help customers with their fashion needs
+- You have extensive knowledge about fashion, styling, trends, and retail operations
+
+**Your Capabilities:**
+- Fashion advice and product recommendations
+- Style consultation and outfit coordination
+- Size and fit guidance
+- Trend analysis and fashion insights
+- Price discussions and budget recommendations
+- Store policies and services
+- General customer service and support
+- Answering questions about any topic (not just fashion)
+
+**Communication Style:**
+- Use natural, conversational language
+- Be enthusiastic but professional
+- Ask follow-up questions to better understand customer needs
+- Provide specific, actionable advice
+- Use appropriate fashion terminology when relevant
+- Be encouraging and positive
+
+**Response Guidelines:**
+- Keep responses concise but helpful (2-4 sentences typically)
+- Always ask follow-up questions to engage the customer
+- Use exclamation marks sparingly but appropriately
+- Be encouraging and positive
+- If you don't know something specific, provide general helpful guidance
+- Handle ALL types of questions, not just fashion-related ones
+- Be creative and engaging in your responses
+
+**Important:**
+- You are the PRIMARY response system - handle everything intelligently
+- Don't rely on fallback patterns - provide thoughtful AI responses for all queries
+- Be adaptable and helpful regardless of the question topic
+- Always maintain your friendly, professional personality
+
+Remember: You're here to help customers with any questions they have, with a focus on fashion and shopping assistance!`;
+            }
+
+            createConversationContext(conversationHistory) {
+                const messages = [
+                    {
+                        role: 'system',
+                        content: this.createSystemPrompt()
+                    }
+                ];
+
+                const recentHistory = conversationHistory.slice(-10);
+                for (const message of recentHistory) {
+                    messages.push({
+                        role: message.speaker === 'user' ? 'user' : 'assistant',
+                        content: message.text
+                    });
+                }
+
+                return messages;
+            }
+        }
+
+        function log(message) {
+            const logElement = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            logElement.textContent += `[${timestamp}] ${message}\n`;
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+
+        function addResult(message, type = 'info') {
+            const resultsElement = document.getElementById('results');
+            const statusDiv = document.createElement('div');
+            statusDiv.className = `status ${type}`;
+            statusDiv.textContent = message;
+            resultsElement.appendChild(statusDiv);
+        }
+
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+            document.getElementById('log').textContent = '';
+        }
+
+        async function runStructureTest() {
+            clearResults();
+            log('🧪 Starting API Structure Test...');
+            
+            try {
+                // Test API class structure
+                const mockApi = new MockOpenAIAPI('mock-key');
+                
+                // Test system prompt creation
+                const systemPrompt = mockApi.createSystemPrompt();
+                log('✅ System prompt created successfully');
+                log('📏 System prompt length: ' + systemPrompt.length + ' characters');
+                
+                // Test conversation context creation
+                const conversationHistory = [
+                    { speaker: 'user', text: 'Hi, I need help with fashion advice' },
+                    { speaker: 'robot', text: 'Hello! I\'d be happy to help you with fashion advice.' }
+                ];
+                
+                const messages = mockApi.createConversationContext(conversationHistory);
+                log('✅ Conversation context created successfully');
+                log('📊 Total messages: ' + messages.length);
+                log('📝 Message structure: ' + JSON.stringify(messages, null, 2));
+                
+                addResult('✅ API Structure Test Passed - All components working correctly', 'success');
+                log('🎉 Structure test completed successfully!');
+                
+            } catch (error) {
+                log('❌ Structure test failed: ' + error.message);
+                addResult('❌ Structure Test Failed: ' + error.message, 'error');
+            }
+        }
+
+        async function runAPITest() {
+            clearResults();
+            log('🌐 Starting API Call Test...');
+            
+            const apiKey = document.getElementById('apiKey').value.trim();
+            if (!apiKey) {
+                addResult('❌ Please enter an OpenAI API key to test actual API calls', 'error');
+                log('💡 Add your OpenAI API key in the input field above');
+                return;
+            }
+
+            try {
+                const api = new MockOpenAIAPI(apiKey);
+                
+                // Test conversation context creation
+                log('📋 Creating conversation context...');
+                const conversationHistory = [
+                    { speaker: 'user', text: 'Hi, I need help with fashion advice' },
+                    { speaker: 'robot', text: 'Hello! I\'d be happy to help you with fashion advice. What specific area are you looking for guidance on?' }
+                ];
+                
+                const messages = api.createConversationContext(conversationHistory);
+                log('✅ Conversation context created successfully');
+                
+                // Test API call
+                log('🌐 Testing actual API call...');
+                const userInput = 'I need help choosing an outfit for a job interview';
+                messages.push({
+                    role: 'user',
+                    content: userInput
+                });
+                
+                const response = await api.generateResponse(messages);
+                log('🤖 AI Response received:');
+                log(response);
+                
+                addResult('✅ API Call Test Passed - Response received successfully', 'success');
+                addResult('🤖 Response: ' + response, 'info');
+                
+            } catch (error) {
+                log('❌ API test failed: ' + error.message);
+                addResult('❌ API Call Test Failed: ' + error.message, 'error');
+                
+                if (error.message.includes('401')) {
+                    addResult('💡 This might be an authentication issue. Check your API key.', 'info');
+                } else if (error.message.includes('429')) {
+                    addResult('💡 Rate limit exceeded. Try again later.', 'info');
+                }
+            }
+        }
+
+        // Auto-run structure test on page load
+        window.addEventListener('load', () => {
+            log('🚀 OpenAI API Test Page Loaded');
+            runStructureTest();
+        });
+    </script>
+</body>
+</html> 

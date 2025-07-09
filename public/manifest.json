@@ -1,0 +1,23 @@
+{
+  "name": "RoboQuin Motion Control Hub",
+  "short_name": "RoboQuin",
+  "description": "Advanced IoT-enabled robotic mannequin management platform",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/ifactory_logo.jpeg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/ifactory_logo.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+} 

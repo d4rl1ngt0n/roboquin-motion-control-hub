@@ -1,0 +1,18 @@
+/* Minimal custom styles for Camera Analytics Dashboard */
+/* Most styling is now handled by the main app's design system */
+
+/* Toast positioning - only if needed */
+.toast {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 9999;
+}
+
+@media (max-width: 600px) {
+  .toast {
+    left: 8px;
+    right: 8px;
+    top: 8px;
+  }
+} 

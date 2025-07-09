@@ -1,8 +1,11 @@
-
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-export function AnalyticsChart() {
+interface AnalyticsChartProps {
+  mannequins?: any[];
+}
+
+export function AnalyticsChart({ mannequins }: AnalyticsChartProps) {
   const data = [
     { time: '00:00', movements: 12, active: 18 },
     { time: '04:00', movements: 8, active: 14 },
