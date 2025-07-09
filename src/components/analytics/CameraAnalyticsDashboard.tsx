@@ -332,14 +332,18 @@ const CameraAnalyticsDashboard: React.FC = () => {
             style={{ width: videoWidth, height: videoHeight }}
           >
             {/* Mock video stream: use a placeholder animated GIF or MJPEG URL */}
-            <img
-              src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"
-              alt="Mock Camera Stream"
+            <video
+              src="/MannequinImages/users outside.mp4"
               width={videoWidth}
               height={videoHeight}
               className="block w-full h-auto rounded"
-              draggable={false}
-            />
+              autoPlay
+              loop
+              muted
+              style={{ objectFit: 'cover' }}
+            >
+              Sorry, your browser does not support embedded videos.
+            </video>
             {/* Entry Line */}
             <div
               style={{
